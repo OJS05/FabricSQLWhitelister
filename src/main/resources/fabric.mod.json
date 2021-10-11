@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "fabric-sql-whitelister",
+  "version": "${version}",
+  "name": "FabricSQLWhitelister",
+  "description": "Reads and writes whitelist from a mySQL database.",
+  "authors": [
+    "ojs05"
+  ],
+  "contact": {
+    "website": "ojs05.live"
+  },
+  "license": "MIT",
+  "icon": "assets/fabric-sql-whitelister/icon.png",
+  "environment": "server",
+  "entrypoints": {
+    "main": [
+      "live.ojs05.fabricsqlwhitelister.FabricSQLWhitelister"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.11.7",
+    "fabric": "*",
+    "minecraft": "1.17.1"
+  }
+}
