@@ -11,7 +11,7 @@
     "website": "ojs05.live"
   },
   "license": "MIT",
-  "icon": "assets/fabric-sql-whitelister/icon.png",
+  "icon": "fabric-sql-whitelister.png",
   "environment": "server",
   "entrypoints": {
     "main": [
@@ -19,8 +19,11 @@
     ]
   },
   "depends": {
-    "fabricloader": ">=0.11.7",
+    "fabricloader": ">=0.12.8",
     "fabric": "*",
-    "minecraft": "1.17.1"
-  }
+    "minecraft": "1.18"
+  },
+  "mixins": [
+    "sqlwhitelister.mixins.json"
+  ]
 }

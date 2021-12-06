@@ -2,7 +2,7 @@ plugins {
     id 'fabric-loom' version '0.10-SNAPSHOT'
     id 'maven-publish'
     id 'java'
-    id("com.github.johnrengelman.shadow") version "7.0.0"
+    id 'com.github.johnrengelman.shadow' version '7.0.0'
 }
 
 version = project.mod_version
@@ -11,26 +11,32 @@ group = project.maven_group
 repositories {
     mavenCentral()
     maven {
-        url = 'https://maven.husk.pro/releases/'
+        url = uri("https://maven.husk.pro/repository/maven-releases/")
     }
     maven {
         url = 'https://jitpack.io'
     }
+    maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
 }
 
 dependencies {
     // To change the versions see the gradle.properties file
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    minecraft "com.mojang:minecraft:1.18"
+    mappings "net.fabricmc:yarn:1.18+build.1:v2"
+    modImplementation "net.fabricmc:fabric-loader:0.12.8"
+    modImplementation 'me.lucko:fabric-permissions-api:0.1-SNAPSHOT'
 
     // Fabric API. This is technically optional, but you probably want it anyway.
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-    implementation 'pro.husk:mysql:1.4.1-SNAPSHOT'
-    implementation 'mysql:mysql-connector-java:8.0.26'
+    modImplementation "net.fabricmc.fabric-api:fabric-api:0.44.0+1.18"
+    implementation 'pro.husk:mysql:1.4.1'
+    implementation 'mysql:mysql-connector-java:8.0.27'
     implementation 'com.github.simplix-softworks:simplixstorage:3.2.3'/* Replace me with the current version */
     // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
     // You may need to force-disable transitiveness on them.
+
+    shadow(include('pro.husk:mysql:1.4.1'))
+    shadow(include('mysql:mysql-connector-java:8.0.27'))
+    shadow(include('com.github.simplix-softworks:simplixstorage:3.2.3'))
 }
 
 processResources {
@@ -42,7 +48,7 @@ processResources {
     }
 }
 
-def targetJavaVersion = 16
+def targetJavaVersion = 17
 tasks.withType(JavaCompile).configureEach {
     // ensure that the encoding is set to UTF-8, no matter what the system default is
     // this fixes some edge cases with special characters not displaying correctly
