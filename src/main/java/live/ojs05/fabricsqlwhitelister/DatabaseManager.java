@@ -46,7 +46,7 @@ public class DatabaseManager {
     }
 
     public static void addPlayer(GameProfile profile){
-        mySQL.updateAsync("INSERT IGNORE INTO whitelist (username, uuid) VALUES ('" + profile.getName() + "', '" + profile.getId().toString().replace("-", "") + "')");
+        mySQL.updateAsync("INSERT IGNORE INTO whitelist (username, uuid) VALUES ('" + profile.getName().toLowerCase() + "', '" + profile.getId().toString().replace("-", "") + "')");
     }
 
     public static void removePlayer(GameProfile profile){

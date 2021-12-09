@@ -36,6 +36,17 @@ public class WhitelistCommand {
                             return 1;
                         })
                 ))
+                .then(literal("check").then(CommandManager.argument("username", GameProfileArgumentType.gameProfile())
+                        .requires(Permissions.require("fabricsqlwhitelister.check"))
+                        .executes(ctx -> {
+                            if(DatabaseManager.checkIfWhitelisted(GameProfileArgumentType.getProfileArgument(ctx, "username").stream().findFirst().get().getId())){
+                                ctx.getSource().sendFeedback(new LiteralText(GameProfileArgumentType.getProfileArgument(ctx, "username").stream().findFirst().get().getName() + " is whitelisted!"), false);
+                            }else if(!DatabaseManager.checkIfWhitelisted(GameProfileArgumentType.getProfileArgument(ctx, "username").stream().findFirst().get().getId())){
+                                ctx.getSource().sendFeedback(new LiteralText(GameProfileArgumentType.getProfileArgument(ctx, "username").stream().findFirst().get().getName() + " is not whitelisted!"), false);
+                            }
+                            return 1;
+                        })
+                ))
                 .then(literal("list").requires(Permissions.require("fabricsqlwhitelister.list")).executes(ctx -> {
                     DatabaseManager.listPlayers(ctx.getSource());
                     return 1;
