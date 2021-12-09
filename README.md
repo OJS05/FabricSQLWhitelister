@@ -4,10 +4,10 @@ This is a mod intended to override the whitelist.json by instead using a MySQL d
 ## How to use
 
 ### You will need:
-1. Fabric API
-2. The latest version of FabricSQLWhitelister
-3. Fabric Loader version ``>=0.12.8`` (I may backport in the future when I have time to add LTS for 1.16.5 & 1.17.1)
-4. Minecraft 1.18.*
+- [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api)
+- The latest version of FabricSQLWhitelister
+- Fabric Loader version ``>=0.12.8`` (I may backport in the future when I have time to add LTS for 1.16.5 & 1.17.1)
+- Minecraft 1.18.*
 
 ### Instructions
 1. Boot the server up with the mod installed. This may result in a crash, but that is expected.
