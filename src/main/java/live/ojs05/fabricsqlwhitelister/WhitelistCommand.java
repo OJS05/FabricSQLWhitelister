@@ -9,6 +9,9 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.LiteralText;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static net.minecraft.server.command.CommandManager.literal;
 
 public class WhitelistCommand {
@@ -39,7 +42,17 @@ public class WhitelistCommand {
                 .then(literal("list").requires(Permissions.require("fabricsqlwhitelister.list")).executes(ctx -> {
                     DatabaseManager.listPlayers(ctx.getSource());
                     return 1;
-                })
-        )));
+                }))
+                .then(literal("debug").requires(Permissions.require("fabricsqlwhitelister.debug")).executes(ctx -> {
+                    List<String> feedback = new ArrayList<>();
+                    for (String username: CacheManager.getCache().values()){
+                        feedback.add(username + "\n");
+                        
+                    }
+
+                    ctx.getSource().sendFeedback(new LiteralText(feedback.toString()), false);
+                    return 1;
+                }))
+        ));
     }
 }
