@@ -15,18 +15,26 @@ public class DatabaseManager {
 
     private static MySQL mySQL;
 
-    public static boolean checkIfWhitelisted(UUID uuid){
-        ResultSet resultSet = null;
-        try {
-            resultSet = mySQL.query("SELECT * FROM whitelist WHERE uuid = '" + uuid.toString().replace("-","") + "'");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
-            return resultSet.next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+    public static boolean checkIfWhitelisted(GameProfile profile){
+        UUID uuid = profile.getId();
+        if(CacheManager.checkIfCached(uuid)){
+            return true;
+        }else{
+            ResultSet resultSet = null;
+            try {
+                resultSet = mySQL.query("SELECT * FROM whitelist WHERE uuid = '" + uuid.toString().replace("-","") + "'");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if(resultSet.next()){
+                    CacheManager.add(uuid, profile.getName());
+                }
+                return resultSet.next();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
         }
     }
 
@@ -50,6 +58,7 @@ public class DatabaseManager {
     }
 
     public static void removePlayer(GameProfile profile){
+        CacheManager.remove(profile.getId());
         mySQL.updateAsync("DELETE FROM whitelist WHERE uuid = '" + profile.getId().toString().replace("-","") + "'");
     }
 
